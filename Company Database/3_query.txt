@@ -1,0 +1,27 @@
+SELECT p.Title,p.Project_Status,p.Archived FROM PROJECT as p JOIN REVIEWS as r ON p.Project_ID = r.Project_ID WHERE r.Reviewer_Role='OPTIONAL';
+
+
+SELECT i.First_Name,i.Last_Name,i.Organization FROM INVESTIGATOR as i JOIN WORKS_ON  as w ON i.ssn = w.ssn GROUP BY i.ssn HAVING count(*)>2;
+
+
+SELECT re.First_name AS Reviewer_FirstName,re.Last_name As Reviewer_LastName,i.First_name AS Investigator_FirstName,i.Last_name AS Investigator_LastName FROM INVESTIGATOR as i JOIN WORKS_ON  as w ON i.ssn = w.ssn JOIN  PROJECT as p ON w.Project_ID = p.Project_ID JOIN REVIEWS as r ON p.Project_ID = r.Project_ID JOIN REVIEWER as re ON r.ssn = re.ssn WHERE p.Title = 'Air Quality';
+
+SELECT p.Project_ID,p.Title,i.ssn,i.Last_Name FROM PROJECT as p JOIN WORKS_ON  as w ON p.Project_ID = w.Project_ID JOIN INVESTIGATOR as i ON w.ssn = i.ssn ORDER BY p.Project_ID asc;
+
+
+SELECT p.Project_ID,p.Title,i.ssn,i.First_Name FROM PROJECT as p JOIN WORKS_ON  as w ON p.Project_ID = w.Project_ID JOIN INVESTIGATOR as i ON w.ssn = i.ssn WHERE Inv_Role='PI';
+
+
+SELECT p.Project_ID,p.Title,p.Project_Status ,p.Archived FROM PROJECT as p JOIN WORKS_ON  as w ON p.Project_ID = w.Project_ID JOIN INVESTIGATOR as i ON w.ssn = i.ssn WHERE Inv_Role='Co-PI';
+
+
+SELECT p.Project_ID,p.Title FROM PROJECT as p JOIN WORKS_ON  as w ON p.Project_ID = w.Project_ID JOIN INVESTIGATOR as i ON w.ssn = i.ssn WHERE i.First_Name = 'John' and Last_Name = 'Smith' and Inv_Role='PI';
+
+
+SELECT re.ssn,count(*) FROM REVIEWS as r JOIN REVIEWER as re ON re.ssn = r.ssn GROUP BY r.ssn HAVING count(*)>2;
+
+
+SELECT i.ssn,i.Last_Name,count(*) FROM INVESTIGATOR as i JOIN WORKS_ON as w ON i.ssn = w.ssn WHERE w.Inv_Role ='PI'GROUP BY i.ssn HAVING count(*)>2; 
+
+ 
+SELECT i.ssn AS Investigator_SSN,re.ssn AS Reviewer_SSN FROM INVESTIGATOR as i JOIN WORKS_ON  as w ON i.ssn = w.ssn JOIN  PROJECT as p ON w.Project_ID = p.Project_ID JOIN REVIEWS as r ON p.Project_ID = r.Project_ID JOIN REVIEWER as re ON r.ssn = re.ssn WHERE i.Last_Name = 'Smith' or re.Last_Name = 'Smith';
