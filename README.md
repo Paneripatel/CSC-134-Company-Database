@@ -1,1 +1,1 @@
-# CSC-134-Company-Database
+# CSC-134 Company Database
